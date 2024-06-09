@@ -1,0 +1,23 @@
+---
+interface Props {
+  date: Date;
+  full?: boolean;
+}
+
+const { date, full } = Astro.props;
+---
+
+<time datetime={date.toISOString()}>
+  {
+    full
+      ? date.toLocaleTimeString("ja-JP", {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        })
+      : date.toLocaleDateString()
+  }
+</time>

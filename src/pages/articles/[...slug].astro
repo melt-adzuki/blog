@@ -1,0 +1,95 @@
+---
+import Main from "../../layouts/Main.astro";
+import FormattedTime from "../../components/FormattedTime.astro";
+import ShareSnippet from "../../components/ShareSnippet.astro";
+import { contentfulClient, type BlogPost } from "../../lib/contentful";
+import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
+import { getImage } from "astro:assets";
+import { getOgpUrl } from "../../lib/ogp";
+
+export async function getStaticPaths() {
+  const entries = await contentfulClient.getEntries<BlogPost>({
+    content_type: "blogPost",
+  });
+
+  const pages = await Promise.all(
+    entries.items.map(async (item) => ({
+      params: { slug: item.fields.slug },
+      props: {
+        subtitle: item.fields.subtitle,
+        isBreaking: item.fields.newsType === "速報",
+        thumbnail: {
+          src: await getImage({
+            src: getOgpUrl({
+              thumbnail: item.fields.thumbnail?.fields.file?.url,
+              title: item.fields.title,
+              highlight: item.fields.newsType,
+            }),
+            format: "webp",
+            width: 1440,
+            height: 1080,
+          }).then((result) => result.src),
+          alt: item.fields.thumbnail?.fields.description,
+        },
+        updatedAt: item.sys.updatedAt,
+        content: documentToHtmlString(item.fields.content).replaceAll(
+          "\n",
+          "<br>"
+        ),
+        description: omitLongText(
+          item.fields.content.content
+            .map((node) => (node.content[0] as { value: string }).value)
+            .join("")
+            .replaceAll("\n", "")
+        ),
+      },
+    }))
+  );
+
+  function omitLongText(text: string) {
+    return text.length > 100 ? text.slice(0, 100) + "..." : text;
+  }
+
+  return pages;
+}
+
+const { subtitle, isBreaking, thumbnail, updatedAt, content, description } = Astro.props;
+---
+
+<Main title={subtitle} description={description} thumbnail={thumbnail.src}>
+  <nav aria-label="Breadcrumb" class="mb-3">
+    <ul
+      class="text-sm [&>*>a:hover]:underline [&>*>a]:text-rose-800
+        *:inline *:after:ml-1 [&>*]:after:content-['/'] [&>*:last-child]:after:hidden"
+    >
+      <li><a href="/">トップ</a></li>
+      <li><span aria-current="page">個別記事</span></li>
+    </ul>
+  </nav>
+
+  <article class="prose mx-auto" set:html={content}>
+    <header class="mb-8">
+      {
+        thumbnail && (
+          <img
+            class="not-prose mb-4 rounded-sm aspect-[4/3] object-cover"
+            src={thumbnail.src}
+            alt={thumbnail.alt}
+            width="1440"
+            height="1080"
+          />
+        )
+      }
+      <h2 class="mt-0 mb-1">
+        {isBreaking && (
+          <div class="inline-flex items-center text-center rounded-sm bg-amber-500 -translate-y-0.5">
+            <div class="text-base text-white italic leading-8">【NEWS JUST GONE】</div>
+          </div>
+        )}
+        {subtitle}
+      </h2>
+      <FormattedTime full date={new Date(updatedAt)} />
+      <ShareSnippet title={subtitle} url={Astro.url} />
+    </header>
+  </article>
+</Main>

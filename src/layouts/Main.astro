@@ -1,0 +1,29 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import Meta from "../components/Meta.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  thumbnail?: string;
+}
+---
+
+<!DOCTYPE html>
+
+<html lang="ja" class="h-full">
+  <head>
+    <Meta {...Astro.props} />
+  </head>
+
+  <body class="h-full">
+    <Header />
+
+    <main class="p-4">
+      <slot />
+    </main>
+
+    <Footer />
+  </body>
+</html>
