@@ -31,7 +31,7 @@ export async function getStaticPaths() {
           }).then((result) => result.src),
           alt: item.fields.thumbnail?.fields.description,
         },
-        updatedAt: item.sys.updatedAt,
+        createdAt: item.sys.createdAt,
         content: documentToHtmlString(item.fields.content).replaceAll(
           "\n",
           "<br>"
@@ -53,14 +53,14 @@ export async function getStaticPaths() {
   return pages;
 }
 
-const { subtitle, isBreaking, thumbnail, updatedAt, content, description } = Astro.props;
+const { subtitle, isBreaking, thumbnail, createdAt, content, description } =
+  Astro.props;
 ---
 
 <Main title={subtitle} description={description} thumbnail={thumbnail.src}>
   <nav aria-label="Breadcrumb" class="mb-3">
     <ul
-      class="text-sm [&>*>a:hover]:underline [&>*>a]:text-rose-800
-        *:inline *:after:ml-1 [&>*]:after:content-['/'] [&>*:last-child]:after:hidden"
+      class="text-sm [&>*>a:hover]:underline [&>*>a]:text-rose-800 *:inline *:after:ml-1 [&>*]:after:content-['/'] [&>*:last-child]:after:hidden"
     >
       <li><a href="/">トップ</a></li>
       <li><span aria-current="page">個別記事</span></li>
@@ -81,14 +81,18 @@ const { subtitle, isBreaking, thumbnail, updatedAt, content, description } = Ast
         )
       }
       <h2 class="mt-0 mb-1">
-        {isBreaking && (
-          <div class="inline-flex items-center text-center rounded-sm bg-amber-500 -translate-y-0.5">
-            <div class="text-base text-white italic leading-8">【NEWS JUST GONE】</div>
-          </div>
-        )}
+        {
+          isBreaking && (
+            <div class="inline-flex items-center text-center rounded-sm bg-amber-500 -translate-y-0.5">
+              <div class="text-base text-white italic leading-8">
+                NEWS JUST GONE
+              </div>
+            </div>
+          )
+        }
         {subtitle}
       </h2>
-      <FormattedTime full date={new Date(updatedAt)} />
+      <FormattedTime full date={new Date(createdAt)} />
       <ShareSnippet title={subtitle} url={Astro.url} />
     </header>
   </article>

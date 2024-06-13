@@ -30,7 +30,7 @@ const articles = await Promise.all(
         }).then((result) => result.src),
         alt: thumbnail?.fields.description,
       },
-      updatedAt: new Date(item.sys.updatedAt),
+      createdAt: new Date(item.sys.createdAt),
     };
   })
 );
@@ -57,7 +57,7 @@ const articles = await Promise.all(
               />
               <h4 class="font-bold text-xl mt-2">{article.subtitle}</h4>
               <p class="mt-2">
-                <FormattedTime date={article.updatedAt} />
+                <FormattedTime date={article.createdAt} />
               </p>
             </a>
           </li>

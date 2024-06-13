@@ -5,6 +5,7 @@ interface ImportMetaEnv {
   readonly SITE_TITLE: string;
   readonly SITE_TITLE_EN: string;
   readonly SITE_DESCRIPTION: string;
+  readonly SITE_URL: string;
   readonly CONTENTFUL_SPACE_ID: string;
   readonly CONTENTFUL_DELIVERY_TOKEN: string;
   readonly CONTENTFUL_PREVIEW_TOKEN: string;
