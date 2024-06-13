@@ -4,11 +4,11 @@ import sitemap from '@astrojs/sitemap';
 import tailwind from "@astrojs/tailwind";
 import { loadEnv } from "vite"
 
-const { SITE_URL } = loadEnv(process.env.NODE_ENV, process.cwd(), "")
+const { DEPLOYMENT_URL } = loadEnv(process.env.NODE_ENV, process.cwd(), "")
 
 // https://astro.build/config
 export default defineConfig({
-  site: SITE_URL,
+  site: DEPLOYMENT_URL,
   integrations: [mdx(), sitemap(), tailwind()],
   image: {
     remotePatterns: [{ protocol: "https" }],
