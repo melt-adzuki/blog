@@ -14,17 +14,17 @@ const content = encodeURIComponent(`${title} | ${SITE_TITLE}\n${url}`);
 ---
 
 <aside class="not-prose">
-  <div class="flex gap-3 items-center justify-end pr-2 [&>a]:p-1.5 [&>a]:w-8 [&>a]:h-8 [&>a]:rounded-md">
+  <div class="flex gap-3 items-center justify-end pr-2 [&>.i]:p-1.5 [&>.i]:w-8 [&>.i]:h-8 [&>.i]:rounded-md">
     <p>シェア</p>
     <a
-      class="bg-lime-500"
+      class="i bg-lime-500"
       target="_blank"
       href={`https://misskey-hub.net/share/?text=${content}`}
     >
       <Image src={MisskeyIcon} alt="Misskey" />
     </a>
     <a
-      class="bg-black"
+      class="i bg-black"
       target="_blank"
       href={`https://x.com/intent/post?text=${content}`}
     >
