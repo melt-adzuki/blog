@@ -1,0 +1,11 @@
+---
+import { Image } from "astro:assets";
+import Main from "../layouts/Main.astro";
+import PageNotFoundImage from "../assets/404.png";
+---
+
+<Main>
+  <section class="mt-8 flex justify-center items-center">
+    <Image src={PageNotFoundImage} alt="404 Page Not Found" />
+  </section>
+</Main>
