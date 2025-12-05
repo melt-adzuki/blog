@@ -54,7 +54,7 @@ const articles = await Promise.all(
           <li class="mt-4">
             <a href={`/articles/${article.slug}/`}>
               <img
-                class="aspect-[4/3] object-cover"
+                class="aspect-4/3 object-cover"
                 src={article.thumbnail.src}
                 alt={article.thumbnail.alt}
                 width="1440"
@@ -72,7 +72,7 @@ const articles = await Promise.all(
   </section>
   <section class="mt-6">
     <h2 class="text-2xl md:text-3xl font-bold text-center">相互リンク</h2>
-    <ul class="mt-4 text-center [&>*]:m-1 [&>*]:inline-block leading-[0]">
+    <ul class="mt-4 text-center *:m-1 *:inline-block leading-0">
       <li>
         <a href="https://syobon.net" target="_blank">
           <Image

@@ -60,7 +60,7 @@ const { subtitle, isBreaking, thumbnail, createdAt, content, description } =
 <Main title={subtitle} description={description} thumbnail={thumbnail.src}>
   <nav aria-label="Breadcrumb" class="mb-3">
     <ul
-      class="text-sm [&>*>a:hover]:underline [&>*>a]:text-rose-800 *:inline *:after:ml-1 [&>*]:after:content-['/'] [&>*:last-child]:after:hidden"
+      class="text-sm [&>*>a:hover]:underline [&>*>a]:text-rose-800 *:inline *:after:ml-1 *:after:content-['/'] [&>*:last-child]:after:hidden"
     >
       <li><a href="/">トップ</a></li>
       <li><span aria-current="page">個別記事</span></li>
@@ -72,7 +72,7 @@ const { subtitle, isBreaking, thumbnail, createdAt, content, description } =
       {
         thumbnail && (
           <img
-            class="not-prose mb-4 rounded-sm aspect-[4/3] object-cover"
+            class="not-prose mb-4 rounded-sm aspect-4/3 object-cover"
             src={thumbnail.src}
             alt={thumbnail.alt}
             width="1440"
